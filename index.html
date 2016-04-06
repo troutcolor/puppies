@@ -40,7 +40,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 <body>
 	<div id="searchstrip">
-		Dont like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button>
+		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>. 
 	</div>
 	<div id="puppies">
 		
@@ -187,12 +187,18 @@ var startGifs=function(){
 	 }
 	 
 	 var reload=function(){
-		 console.log('reload...');
+		  
 		 var search=$('#search').val();
 		 if(search!=""){
 		 loadSounds(search);
 		 loadGifs(search);
 	 }
+	 }
+	 
+	 var load=function(thestring){
+		 $('#search').val(thestring);
+		 loadSounds(thestring);
+		 reload();
 	 }
 	
 	 $(document).ready(function() {
