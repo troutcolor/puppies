@@ -34,6 +34,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 }
 #showinfo{float:right;}
 #puppies{margin: 100px auto;color:#fff;background-color: #191919;opacity:0.5;padding:20px;cursor: pointer;}
+#mobile{font-size:3em;margin: 100px auto;}
 </style>
 
  
@@ -42,11 +43,11 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 <body>
 	<div id="searchstrip">
-		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>. <button onclick="audioPlayer.play();" id="mobile">Play Sounds</button> <button onclick="showinfo();" id="showinfo">i</button>
+		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>.  <button onclick="showinfo();" id="showinfo">i</button>
 	</div>
 	<div id="puppies">
 		<p>This is a page made in response to the DS106 daily create of 6th April 2016. I've used it to learn a little bit about git, github and hosting pages on github. Very much inspired by @cogdog.</p><p>Made by John Johnston @johnjohnston.</p><p>Click this box to hide.</p>
-		
+		<button onclick="audioPlayer.play();$('#mobile').hide();" id="mobile">Play Sounds</button>
 	</div>
 	<div class="footer" id="credit">
 		 
