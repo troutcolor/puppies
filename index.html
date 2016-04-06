@@ -12,7 +12,7 @@
 <style type="text/css" media="screen">
 html{height: 100%;
 }
-body{background-size:cover;height:100%;background-repeat:no-repeat; background-position:center center;  background-attachment: fixed; ;}
+body{background-size:cover;height:100%;background-repeat:no-repeat; background-position:center center;  background-attachment: fixed; padding:0px;margin:0px;;}
 .footer {
   position: absolute;
   right: 0;
@@ -25,6 +25,13 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
   opacity: 0.5;
   font-family: Helvetica, "MS Trebuchet", sans-serif;
 }
+#searchstrip{
+    background-color: #191919;
+    color:#fff;
+     opacity: 0.5;
+    font-family: Helvetica, "MS Trebuchet", sans-serif;
+	
+}
 </style>
 
  
@@ -32,6 +39,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 </head>
 
 <body>
+	<div id="searchstrip">
+		Dont like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button>
+	</div>
 	<div id="puppies">
 		
 		
@@ -53,10 +63,10 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	  
 		 
 
-		 var loadSounds =function()	{	 
+		 var loadSounds =function(thesound)	{	 
 		 
 			 var searchsound=$('#sounds').val();
-			 var searchurl="//www.freesound.org/apiv2/search/text/?query=dog&fields=name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100";
+			 var searchurl="//www.freesound.org/apiv2/search/text/?query="+thesound+"&fields=name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100";
  	 	$.ajax({
  	 	  url: searchurl,
  	 	  type: 'GET',
@@ -78,9 +88,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 }
 
-var loadGifs=function(){
+var loadGifs=function(thegif){
  var searchgif=$('#gifs').val();
- var searchurl="//api.giphy.com/v1/gifs/search?q=puppies&api_key=dc6zaTOxFJmzC&limit=100";
+ var searchurl="//api.giphy.com/v1/gifs/search?q="+thegif+"&api_key=dc6zaTOxFJmzC&limit=100";
 
 $.ajax({
   url: searchurl,
@@ -176,10 +186,18 @@ var startGifs=function(){
 	   return array;
 	 }
 	 
+	 var reload=function(){
+		 console.log('reload...');
+		 var search=$('#search').val();
+		 if(search!=""){
+		 loadSounds(search);
+		 loadGifs(search);
+	 }
+	 }
 	
 	 $(document).ready(function() {
-		 loadSounds();
-		 loadGifs();
+		 loadSounds('dog');
+		 loadGifs('puppy');
 		 setInterval(gifTimer,10000)
 	 });
  	 
