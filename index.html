@@ -13,6 +13,18 @@
 html{height: 100%;
 }
 body{background-size:cover;height:100%;background-repeat:no-repeat; background-position:center center;  background-attachment: fixed; ;}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #191919;
+  color:#fff;
+  text-align: center;
+  opacity: 0.5;
+  font-family: Helvetica, "MS Trebuchet", sans-serif;
+}
 </style>
 
  
@@ -23,6 +35,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	<div id="puppies">
 		
 		
+	</div>
+	<div class="footer" id="credit">
+		 
 	</div>
 
  
@@ -98,13 +113,12 @@ var startSounds = function(){
 		
 		
 	 
-	/* $("div.info").each(function(i){
-		var thelicense= curentSounds[i].license.split('/');
+	 
+		var thelicense= sounds['results'][0].license.split('/');
 		var thislicense= thelicense[4];
 			
-		$( this ).html(curentSounds[i].name +" by "+ curentSounds[i].username +" license CC "+ thislicense );
-	});
-		*/
+		$( '#credit' ).html(sounds['results'][0].name +" by "+ sounds['results'][0].username +" license CC "+ thislicense );
+	 
 		
 	
 }
@@ -115,6 +129,11 @@ var playNext=function(){
 	audioPlayer.src=sounds['results'][currentSound].previews['preview-lq-mp3'];
 	audioPlayer.play();
 	console.log(sounds['results'][currentSound].previews['preview-lq-mp3']);
+	
+	var thelicense= sounds['results'][currentSound].license.split('/');
+	var thislicense= thelicense[4];
+		
+	$( '#credit' ).html("Sound: "+ sounds['results'][currentSound].name +" by "+ sounds['results'][currentSound].username +" license: CC "+ thislicense );
 	
 }
 
