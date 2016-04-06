@@ -1,0 +1,169 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Puppies</title>
+  <meta name="description" content="About this">
+  <meta name="author" content="John Johnston">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ 
+<style type="text/css" media="screen">
+body{background-size:cover;height:100%;}
+</style>
+
+ 
+   
+</head>
+
+<body>
+	<div id="puppies">
+		
+		
+	</div>
+
+ 
+ <script type="text/javascript">
+	var sounds;
+	var gifs;
+	var currentSound=0;
+	var currentGif=0;
+	 
+
+
+	var audioPlayer= document.createElement("AUDIO");
+	  
+		 
+
+		 var loadSounds =function()	{	 
+		 
+			 var searchsound=$('#sounds').val();
+			 var searchurl="//www.freesound.org/apiv2/search/text/?query=dog&fields=name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100";
+ 	 	$.ajax({
+ 	 	  url: searchurl,
+ 	 	  type: 'GET',
+  dataType: 'json',
+  complete: function(xhr, textStatus) {
+ 	 	    //called when complete
+ 	 	  },
+  success: function(data, textStatus, xhr) {
+ 	 	    //called when successful
+	  //console.log(data);
+	  sounds=data;
+	  console.log(sounds);
+	  startSounds();
+ 	 	  },
+  error: function(xhr, textStatus, errorThrown) {
+ 	 	    //called when there is an error
+ 	 	  }
+});
+
+}
+
+var loadGifs=function(){
+ var searchgif=$('#gifs').val();
+ var searchurl="//api.giphy.com/v1/gifs/search?q=puppies&api_key=dc6zaTOxFJmzC&limit=100";
+
+$.ajax({
+  url: searchurl,
+  type: 'GET',
+  dataType: 'json',
+  complete: function(xhr, textStatus) {
+    //called when complete
+  },
+  success: function(data, textStatus, xhr) {
+    //called when successful
+	  gifs=data;
+	  startGifs();
+  },
+  error: function(xhr, textStatus, errorThrown) {
+    //called when there is an error
+  }
+});
+
+}
+
+var startSounds = function(){
+	shuffle(sounds.results);
+	
+	 
+		
+		audioPlayer.src=sounds['results'][0].previews['preview-lq-mp3'];
+		//audioPlayer.loop=true;
+		audioPlayer.play();
+		audioPlayer.addEventListener("ended", playNext);
+		
+		
+	 
+	/* $("div.info").each(function(i){
+		var thelicense= curentSounds[i].license.split('/');
+		var thislicense= thelicense[4];
+			
+		$( this ).html(curentSounds[i].name +" by "+ curentSounds[i].username +" license CC "+ thislicense );
+	});
+		*/
+		
+	
+}
+
+var playNext=function(){
+	currentSound++;
+	if (currentSound >= sounds.length){currentSound=0;}
+	audioPlayer.src=sounds['results'][currentSound].previews['preview-lq-mp3'];
+	audioPlayer.play();
+	console.log(sounds['results'][currentSound].previews['preview-lq-mp3']);
+	
+}
+
+var startGifs=function(){
+	gifhtml="";
+	shuffle(gifs.data);
+	 
+	$("body").css("background-image", "url("+ gifs.data[0].images.original.url +")");
+			
+			//$('.giphylink')[i].href=gifs.data[i].source ;
+			//gifurl=gifs.data[i].images.original.url;
+
+	    };
+ 
+   	 var gifTimer=function(){
+   		 currentGif++;
+   		 if (currentGif>=gifs.data.length){currentGif=0;}
+   		$("body").css("background-image", "url("+ gifs.data[currentGif].images.original.url +")");
+		var preload = new Image();
+		preload.src=gifs.data[currentGif+1].images.original.url;
+   	 }
+	 
+	 
+	 function shuffle(array) {
+	   var currentIndex = array.length, temporaryValue, randomIndex ;
+
+	   // While there remain elements to shuffle...
+	   while (0 !== currentIndex) {
+
+	     // Pick a remaining element...
+	     randomIndex = Math.floor(Math.random() * currentIndex);
+	     currentIndex -= 1;
+
+	     // And swap it with the current element.
+	     temporaryValue = array[currentIndex];
+	     array[currentIndex] = array[randomIndex];
+	     array[randomIndex] = temporaryValue;
+	   }
+
+	   return array;
+	 }
+	 
+	
+	 $(document).ready(function() {
+		 loadSounds();
+		 loadGifs();
+		 setInterval(gifTimer,10000)
+	 });
+ 	 
+ </script>
+	
+	<!--curl 'http://www.freesound.org/apiv2/search/text/?query=dub&fields=name,previews&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d'-->
+</body>
+</html>	
