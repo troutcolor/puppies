@@ -42,10 +42,10 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 <body>
 	<div id="searchstrip">
-		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>. <button onclick="showinfo();" id="showinfo">i</button>
+		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>. <button onclick="audioPlayer.play();" id="mobile">Play Sounds</button> <button onclick="showinfo();" id="showinfo">i</button>
 	</div>
 	<div id="puppies">
-		<p>This is a page made in response to the DS106 daily create of 6th April 2016. I've used it to learn a little bit about git, github and hosting pages on github. Very much inspired by @cogdog.</p>
+		<p>This is a page made in response to the DS106 daily create of 6th April 2016. I've used it to learn a little bit about git, github and hosting pages on github. Very much inspired by @cogdog.</p><p>Made by John Johnston @johnjohnston.</p><p>Click this box to hide.</p>
 		
 	</div>
 	<div class="footer" id="credit">
@@ -202,13 +202,23 @@ var startGifs=function(){
 		 loadSounds(thestring);
 		 reload();
 	 }
+	 
+	 
+	 var sortMobileSound=function(){
+	 	
+	 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	 			$('#mobile').show();
+	 		}
+	 	 }
 	
 	 $(document).ready(function() {
+		 $('#mobile').hide();
 		  $('#puppies').hide();
 		  $('#puppies').click(function(){$(this).hide();});
 		 loadSounds('dog');
 		 loadGifs('puppy');
-		 setInterval(gifTimer,10000)
+		 setInterval(gifTimer,10000);
+		 sortMobileSound();
 	 });
 	 
 	 var showinfo=function(){
