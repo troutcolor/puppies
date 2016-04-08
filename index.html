@@ -24,6 +24,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
   text-align: center;
   opacity: 0.5;
   font-family: Helvetica, "MS Trebuchet", sans-serif;
+ 
 }
 #searchstrip{
     background-color: #191919;
@@ -32,12 +33,14 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
     
 	padding:4px;
 }
+
 #showinfo{float:right;}
 #puppies{margin: 100px auto;color:#fff;background-color: #191919;opacity:0.5;padding:20px;cursor: pointer;}
 #mobile{font-size:3em;margin: 100px auto;}
 #searchlink a{color:yellow;text-decoration: none;}
 #searchlink a:visited;{color:yellow;}
 #searchlink a:hover;{text-decoration: underline;}
+#link{float:right;}
 </style>
 
  
@@ -53,7 +56,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		
 	</div>
 	<button onclick="audioPlayer.play();$('#mobile').hide();" id="mobile">Play Sounds</button>
-	<div class="footer" id="credit">
+	<div class="footer" ><span id="credit"></span><img src="link_40.png" id="link">
 		 
 	</div>
 
@@ -63,7 +66,8 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	var gifs;
 	var currentSound=0;
 	var currentGif=0;
-	 
+	var currentSoundId="";
+	var currentGifId="";
 
 
 	var audioPlayer= document.createElement("AUDIO");
@@ -73,7 +77,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		 var loadSounds =function(thesound)	{	 
 		 
 			 var searchsound=$('#sounds').val();
-			 var searchurl="//www.freesound.org/apiv2/search/text/?query="+thesound+"&fields=name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100";
+			 var searchurl="//www.freesound.org/apiv2/search/text/?query="+thesound+"&fields=id,name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100";
  	 	$.ajax({
  	 	  url: searchurl,
  	 	  type: 'GET',
@@ -84,9 +88,11 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
   success: function(data, textStatus, xhr) {
  	 	    //called when successful
 	  //console.log(data);
-	  sounds=data;
+	  sounds=data['results'];
+	  	shuffle(sounds);
 	  //console.log(sounds);
-	  startSounds();
+	  playNext();
+	   audioPlayer.addEventListener("ended", playNext);
  	 	  },
   error: function(xhr, textStatus, errorThrown) {
  	 	    //called when there is an error
@@ -118,40 +124,18 @@ $.ajax({
 
 }
 
-var startSounds = function(){
-	shuffle(sounds.results);
-	
-	 
-		
-		audioPlayer.src=sounds['results'][0].previews['preview-lq-mp3'];
-		//audioPlayer.loop=true;
-		audioPlayer.play();
-		audioPlayer.addEventListener("ended", playNext);
-		
-		
-	 
-	 
-		var thelicense= sounds['results'][0].license.split('/');
-		var thislicense= thelicense[4];
-			
-		$( '#credit' ).html("Sound: "+ sounds['results'][0].name +" by "+ sounds['results'][0].username +" license CC "+ thislicense );
-	 
-		
-	
-}
+ 
 
 var playNext=function(){
-	currentSound++;
+	console.log("playing next");
 	if (currentSound >= sounds.length){currentSound=0;}
-	audioPlayer.src=sounds['results'][currentSound].previews['preview-lq-mp3'];
+	audioPlayer.src=sounds[currentSound].previews['preview-lq-mp3'];
+	console.log('loaded');
 	audioPlayer.play();
-	//console.log(sounds['results'][currentSound].previews['preview-lq-mp3']);
-	
-	var thelicense= sounds['results'][currentSound].license.split('/');
+	var thelicense= sounds[currentSound].license.split('/');
 	var thislicense= thelicense[4];
-		
-	$( '#credit' ).html("Sound: "+ sounds['results'][currentSound].name +" by "+ sounds['results'][currentSound].username +" license: CC "+ thislicense );
-	
+	$( '#credit' ).html("Sound: "+ sounds[currentSound].name +" by "+ sounds[currentSound].username +" license: CC "+ thislicense );
+	currentSound++;
 }
 
 var startGifs=function(){
