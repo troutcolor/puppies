@@ -1,0 +1,159 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Title</title>
+  <meta name="description" content="gif & sound">
+  <meta name="author" content="John Johnston">
+<style type="text/css" media="screen">
+body{background-size:cover;height:100%;background-repeat:no-repeat; background-position:center center;  background-attachment: fixed; padding:0px;margin:0px;font-family: Helvetica, "MS Trebuchet", sans-serif;}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #191919;
+  color:#fff;
+  text-align: center;
+  opacity: 0.5;
+  font-family: Helvetica, "MS Trebuchet", sans-serif;
+}
+</style>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+	
+	<div id="footer" class="footer" onclick="tw();return true;">
+		<p id="credit"></p>	</div>
+
+	<script type="text/javascript">
+	
+	var sound;
+	var gif;
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+	
+	var playSound=function(){
+		
+	var audioPlayer= document.createElement("AUDIO");
+	audioPlayer.src=sounds.previews['preview-lq-mp3'];
+	audioPlayer.loop=true;
+	audioPlayer.play();
+	var thelicense= sounds.license.split('/');
+	var thislicense= thelicense[4];
+		
+	$( '#credit' ).html("Sound: "+ sounds.name +" by "+ sounds.username +" license CC "+ thislicense );
+	}
+	
+	
+	var getSound =function(theid)	{
+		var searchurl="//www.freesound.org/apiv2/sounds/"+theid+"/?&fields=id,name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d";
+	 	 	$.ajax({
+	 	 	  url: searchurl,
+	 	 	  type: 'GET',
+	  dataType: 'json',
+	  complete: function(xhr, textStatus) {
+	 	 	    //called when complete
+	 	 	  },
+	  success: function(data, textStatus, xhr) {
+	 	 	    //called when successful
+		  console.log(data);
+		  sounds=data;
+		  playSound();
+		  
+		   //console.log(sounds);
+		  return sounds;
+	 	 	  },
+	  error: function(xhr, textStatus, errorThrown) {
+	 	 	    //called when there is an error
+	 	 	  }
+	});
+
+	}
+	
+	
+	 //http://www.freesound.org/data/previews/227/227901_3234069-lq.mp3
+	
+    $(document).ready(function() {
+    	var g=getParameterByName("g");
+		var soundid=getParameterByName("s");
+		
+		
+		
+		// /apiv2/sounds/<sound_id>/
+		 getSound(soundid);
+		 
+		
+		/*
+		audioPlayer.src="http://www.freesound.org/data/previews/"+s;
+		console.log("http://www.freesound.org/data/previews/"+s);
+		audioPlayer.loop=true;
+		audioPlayer.play();
+		$('#footer').html(c);
+		*/
+	    var
+		
+		//http://api.giphy.com/v1/gifs/feqkVgjJpYtjy?api_key=dc6zaTOxFJmzC
+		 searchurl= "//api.giphy.com/v1/gifs/"+g+"?&api_key=dc6zaTOxFJmzC";
+
+	   $.ajax({
+	     url: searchurl,
+	     type: 'GET',
+	     dataType: 'json',
+	     complete: function(xhr, textStatus) {
+	       //called when complete
+	     },
+	     success: function(data, textStatus, xhr) {
+	       //called when successful
+	   	  gifs=data;
+	   	 console.log(data);
+		 $("body").css("background-image", "url("+ gifs.data.images.original.url +")");
+	     },
+	     error: function(xhr, textStatus, errorThrown) {
+	       //called when there is an error
+	     }
+	   });
+	   
+	    
+		
+    });
+	
+	
+	var tw=(function() {
+		 var u=encodeURI(window.location.href);
+		 var h='Listen to this gif '+ window.location.href;
+		var mes =
+	 "http://twitter.com/share?url="+u+"&text= Listen to this gif "   ;
+	 
+	    var width  = 575,
+	        height = 400,
+	        left   = ($(window).width()  - width)  / 2,
+	        top    = ($(window).height() - height) / 2,
+	        url    = mes,
+	        opts   = 'status=1' +
+	                 ',width='  + width  +
+	                 ',height=' + height +
+	                 ',top='    + top    +
+	                 ',left='   + left;
+					 //alert(url);
+	    window.open(url, 'twitter', opts);
+
+	    return false;
+	  });
+	
+	</script>
+	
+	</body>
+</html>
