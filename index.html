@@ -85,7 +85,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
  	 	    //called when successful
 	  //console.log(data);
 	  sounds=data;
-	  console.log(sounds);
+	  //console.log(sounds);
 	  startSounds();
  	 	  },
   error: function(xhr, textStatus, errorThrown) {
@@ -145,7 +145,7 @@ var playNext=function(){
 	if (currentSound >= sounds.length){currentSound=0;}
 	audioPlayer.src=sounds['results'][currentSound].previews['preview-lq-mp3'];
 	audioPlayer.play();
-	console.log(sounds['results'][currentSound].previews['preview-lq-mp3']);
+	//console.log(sounds['results'][currentSound].previews['preview-lq-mp3']);
 	
 	var thelicense= sounds['results'][currentSound].license.split('/');
 	var thislicense= thelicense[4];
@@ -231,7 +231,7 @@ var startGifs=function(){
 		  
 		  if(window.location.hash) {
 		        var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-		        console.log(hash);
+		        //console.log(hash);
 	   		 loadSounds(hash);
 	   		 loadGifs(hash);
 		    } else {
