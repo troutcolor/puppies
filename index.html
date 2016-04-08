@@ -37,9 +37,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 #showinfo{float:right;}
 #puppies{margin: 100px auto;color:#fff;background-color: #191919;opacity:0.5;padding:20px;cursor: pointer;}
 #mobile{font-size:3em;margin: 100px auto;}
-#searchlink a{color:yellow;text-decoration: none;}
-#searchlink a:visited;{color:yellow;}
-#searchlink a:hover;{text-decoration: underline;}
+ a{color:yellow;text-decoration: none;}
+ a:visited;{color:yellow;}
+ a:hover;{text-decoration: underline;}
 #link{float:right;}
 </style>
 
@@ -58,7 +58,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		
 	</div>
 	<button onclick="audioPlayer.play();$('#mobile').hide();" id="mobile">Play Sounds</button>
-	<div class="footer" ><span id="credit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
+	<div class="footer" ><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
 		 
 	</div>
 
@@ -142,6 +142,10 @@ var playNext=function(){
 	var thelicense= sounds[currentSound].license.split('/');
 	var thislicense= thelicense[4];
 	$( '#credit' ).html("Sound: "+ sounds[currentSound].name +" by "+ sounds[currentSound].username +" license: CC "+ thislicense );
+	var creditlink=sounds[currentSound].url;
+	var soundcredit="<a href='"+creditlink+"'>sound source</a>";
+	$('#soundcredit').html(soundcredit);
+	
 	
 	currentSoundId=sounds[currentSound].id;
 	updateLink();
@@ -154,6 +158,10 @@ var startGifs=function(){
 	 
 	$("body").css("background-image", "url("+ gifs.data[0].images.original.url +")");
 			currentGifId=gifs.data[0].id;
+			var giflink=gifs.data[0].source_post_url;
+			var gifcredit="<a href='"+giflink+"'>gif source</a>";
+			
+			$('#gifcredit').html(gifcredit);
 			//$('.giphylink')[i].href=gifs.data[i].source ;
 			//gifurl=gifs.data[i].images.original.url;
 			updateLink();
@@ -167,6 +175,11 @@ var startGifs=function(){
 		preload.src=gifs.data[currentGif+1].images.original.url;
 		currentGifId=gifs.data[currentGif].id;
 		updateLink();
+		var giflink=gifs.data[currentGif].source_post_url;
+		var gifcredit="<a href='"+giflink+"'>gif source</a>";
+		
+		$('#gifcredit').html(gifcredit);
+		
    	 }
 	 
 	 
