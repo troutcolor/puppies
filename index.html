@@ -35,6 +35,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 #showinfo{float:right;}
 #puppies{margin: 100px auto;color:#fff;background-color: #191919;opacity:0.5;padding:20px;cursor: pointer;}
 #mobile{font-size:3em;margin: 100px auto;}
+#searchlink a{color:yellow;text-decoration: none;}
+#searchlink a:visited;{color:yellow;}
+#searchlink a:hover;{text-decoration: underline;}
 </style>
 
  
@@ -43,7 +46,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 <body>
 	<div id="searchstrip">
-		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>.  <button onclick="showinfo();" id="showinfo">i</button>
+		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>.  <button onclick="showinfo();" id="showinfo">i</button> use #in the url to search: or link:<span id="searchlink"></span>
 	</div>
 	<div id="puppies">
 		<p>This is a page made in response to the DS106 daily create of 6th April 2016. I've used it to learn a little bit about git, github and hosting pages on github. Very much inspired by @cogdog.</p><p>Made by John Johnston @johnjohnston.</p><p>Click this box to hide.</p>
@@ -194,8 +197,10 @@ var startGifs=function(){
 		  
 		 var search=$('#search').val();
 		 if(search!=""){
+			 window.location.hash = search;
 		 loadSounds(search);
 		 loadGifs(search);
+		 updatesearch();
 	 }
 	 }
 	 
@@ -212,13 +217,30 @@ var startGifs=function(){
 	 			$('#mobile').show();
 	 		}
 	 	 }
+		 
+		 var updatesearch=function(){
+		 	
+			 var u = window.location.href;
+			 $('#searchlink').html("<a href='"+u+"'>"+u+"</a>");
+		 }
 	
 	 $(document).ready(function() {
 		 $('#mobile').hide();
 		  $('#puppies').hide();
 		  $('#puppies').click(function(){$(this).hide();});
-		 loadSounds('dog');
-		 loadGifs('puppy');
+		  
+		  if(window.location.hash) {
+		        var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+		        console.log(hash);
+	   		 loadSounds(hash);
+	   		 loadGifs(hash);
+		    } else {
+				window.location.hash = 'puppy';
+	   		 loadSounds('dog');
+	   		 loadGifs('puppy');
+		    }
+			updatesearch();
+		 
 		 setInterval(gifTimer,10000);
 		 sortMobileSound();
 	 });
