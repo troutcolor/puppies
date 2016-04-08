@@ -56,7 +56,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		
 	</div>
 	<button onclick="audioPlayer.play();$('#mobile').hide();" id="mobile">Play Sounds</button>
-	<div class="footer" ><span id="credit"></span><img src="link_40.png" id="link">
+	<div class="footer" ><span id="credit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
 		 
 	</div>
 
@@ -70,6 +70,11 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	var currentGifId="";
 
 
+	var updateLink=function(){
+		var url="single.html?g="+currentGifId+"&s="+currentSoundId;
+		$('#linkurl').attr('href',url);
+		
+	}
 	var audioPlayer= document.createElement("AUDIO");
 	  
 		 
@@ -135,6 +140,9 @@ var playNext=function(){
 	var thelicense= sounds[currentSound].license.split('/');
 	var thislicense= thelicense[4];
 	$( '#credit' ).html("Sound: "+ sounds[currentSound].name +" by "+ sounds[currentSound].username +" license: CC "+ thislicense );
+	
+	currentSoundId=sounds[currentSound].id;
+	updateLink();
 	currentSound++;
 }
 
@@ -143,10 +151,10 @@ var startGifs=function(){
 	shuffle(gifs.data);
 	 
 	$("body").css("background-image", "url("+ gifs.data[0].images.original.url +")");
-			
+			currentGifId=gifs.data[0].id;
 			//$('.giphylink')[i].href=gifs.data[i].source ;
 			//gifurl=gifs.data[i].images.original.url;
-
+			updateLink();
 	    };
  
    	 var gifTimer=function(){
@@ -155,6 +163,8 @@ var startGifs=function(){
    		$("body").css("background-image", "url("+ gifs.data[currentGif].images.original.url +")");
 		var preload = new Image();
 		preload.src=gifs.data[currentGif+1].images.original.url;
+		currentGifId=gifs.data[currentGif].id;
+		updateLink();
    	 }
 	 
 	 
