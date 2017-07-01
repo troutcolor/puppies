@@ -41,6 +41,42 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
  a:visited;{color:yellow;}
  a:hover;{text-decoration: underline;}
 #link{float:right;}
+
+
+
+.wrap{
+    
+    height: 100%;
+    position: relative;
+}
+.circle{
+    background: red;
+    border-radius: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50px;
+    margin: -25px 0 0 -25px;
+}
+.circle_inner{
+    position: relative;
+    height: 100%;
+}
+.circle_inner:before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -7px;
+}
+
 </style>
 
  
@@ -57,7 +93,13 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		<p>Made by John Johnston @johnjohnston.</p><p>Click this box to hide.</p>
 		
 	</div>
-	<button onclick="audioPlayer.play();$('#mobile').hide();" id="mobile">Play Sounds</button>
+	<div class="wrap">
+	<button  class="circle" onclick="audioPlayer.play();$('.wrap').hide();" id="mobile"><div class="circle_inner"></div></button></div>
+	
+	
+	
+	   
+	
 	<div class="footer" ><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
 		 
 	</div>
@@ -77,7 +119,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		$('#linkurl').attr('href',url);
 		
 	}
-	var audioPlayer= document.createElement("AUDIO");
+	  audioPlayer= document.createElement("AUDIO");
 	  
 		 
 
