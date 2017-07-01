@@ -128,7 +128,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 		 var loadSounds =function(thesound)	{	 
 		 
 			 var searchsound=$('#sounds').val();
-			 var searchurl="//www.freesound.org/apiv2/search/text/?query="+thesound+"&fields=id,name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100&filter=duration%3A%5B1%20TO%2010%5D";
+			 var searchurl="//www.freesound.org/apiv2/search/text/?query="+thesound+"&fields=id,name,previews,license,username,images,url&token=3e9dcbd0957ae4e0f6e6323dec5c5b71e01f617d&page_size=100&filter=duration%3A%5B5%20TO%2015%5D";
  	 	$.ajax({
  	 	  url: searchurl,
  	 	  type: 'GET',
@@ -141,7 +141,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	  //console.log(data);
 	  sounds=data['results'];
 	  	shuffle(sounds);
-	  //console.log(sounds);
+	  console.log(sounds);
 	  playNext();
 	   audioPlayer.addEventListener("ended", playNext);
  	 	  },
@@ -178,10 +178,10 @@ $.ajax({
  
 
 var playNext=function(){
-	console.log("playing next");
+	//console.log("playing next");
 	if (currentSound >= sounds.length){currentSound=0;}
 	audioPlayer.src=sounds[currentSound].previews['preview-lq-mp3'];
-	console.log('loaded');
+	//console.log('loaded');
 	audioPlayer.play();
 	var thelicense= sounds[currentSound].license.split('/');
 	var thislicense= thelicense[4];
@@ -302,6 +302,14 @@ var startGifs=function(){
 		 $('#puppies').show();
 	 }
  	 
+	 
+	 
+	 $("#search").keypress(function(e) {
+	     if(e.which == 13) {
+	         reload();
+	     }
+	 });
+	 
  </script>
 	
  </body>
