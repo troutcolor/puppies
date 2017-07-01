@@ -21,12 +21,51 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
   opacity: 0.5;
   font-family: Helvetica, "MS Trebuchet", sans-serif;
 }
+
+
+.wrap{
+    
+    height: 500px;
+    position: relative;
+}
+.circle{
+    background: red;
+    border-radius: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    margin: -25px 0 0 -25px;
+}
+.circle_inner{
+    position: relative;
+    height: 100%;
+}
+.circle_inner:before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -7px;
+}
+
 </style>
 
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <body>
+		<div class="wrap">
+		<button  class="circle" onclick="audioPlayer.play();$('.wrap').hide();" id="mobile"><div class="circle_inner"></div></button>
+	</div>
+	
 	
 	<div id="footer" class="footer" onclick="tw();return true;">
 		<p id="credit"></p>	</div>
@@ -47,7 +86,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	
 	var playSound=function(){
 		
-	var audioPlayer= document.createElement("AUDIO");
+	 audioPlayer= document.createElement("AUDIO");
 	audioPlayer.src=sounds.previews['preview-lq-mp3'];
 	audioPlayer.loop=true;
 	audioPlayer.play();
@@ -90,7 +129,10 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
     	var g=getParameterByName("g");
 		var soundid=getParameterByName("s");
 		
-		
+			 $('.wrap').hide();
+ 	 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ 	 			$('.wrap').show();
+ 	 		}
 		
 		// /apiv2/sounds/<sound_id>/
 		 getSound(soundid);
