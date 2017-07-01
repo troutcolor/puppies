@@ -174,11 +174,12 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	
 	
 	var tw=(function() {
-		 var u=encodeURI(window.location.href);
-		 var h='Listen to this gif '+ window.location.href;
+		 var u=encodeURIComponent(window.location.href);
+		 console.log(u);
+ 		 var h='Listen to this gif '+ window.location.href;
 		var mes =
-	 "http://twitter.com/share?url="+u+"&text= Listen to this gif "   ;
-	 
+	 "https://twitter.com/intent/tweet?text=Listen%20to%20this%20gif&url="+u ;
+	  
 	    var width  = 575,
 	        height = 400,
 	        left   = ($(window).width()  - width)  / 2,
