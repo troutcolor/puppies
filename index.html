@@ -77,6 +77,8 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
     margin: -10px 0 0 -7px;
 }
 
+#gifplaypause{display:block;float:left;}
+
 </style>
 
  
@@ -102,7 +104,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	
 	   
 	
-	<div class="footer" ><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
+	<div class="footer" ><span id="gifplaypause"></span><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
 		 
 	</div>
 
@@ -114,7 +116,9 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	var currentGif=0;
 	var currentSoundId="";
 	var currentGifId="";
-
+	var gifTimerOn;
+	var pauseicon="&#9208;";
+	var playicon="&#x23e9;";
 
 	var updateLink=function(){
 		var url="single.html?g="+currentGifId+"&s="+currentSoundId;
@@ -223,7 +227,7 @@ var startGifs=function(){
 		var gifcredit="<a href='"+giflink+"'>gif source</a>";
 		
 		$('#gifcredit').html(gifcredit);
-		
+		$('#gifplaypause').html("gif: "+pauseicon);
    	 }
 	 
 	 
@@ -294,7 +298,7 @@ var startGifs=function(){
 		    }
 			updatesearch();
 		 
-		 setInterval(gifTimer,10000);
+		gifTimerOn= setInterval(gifTimer,10000);
 		 sortMobileSound();
 	 });
 	 
@@ -310,6 +314,23 @@ var startGifs=function(){
 	     }
 	 });
 	 
+	 
+	 var pauseGif=function(){
+	 	clearInterval(gifTimerOn);
+			$('#gifplaypause').html("gif: "+playicon);
+	 }
+	 
+	 var restartGif =function(){
+		 gifTimer();
+	 	gifTimerOn= setInterval(gifTimer,10000);
+	 }
+	 
+	 $('#gifplaypause').click(function(){
+	 	
+		 if ($('#gifplaypause').html().includes('gif: ⏩')){
+			 restartGif();
+		 }else{pauseGif();}
+	 })
  </script>
 	
  </body>
