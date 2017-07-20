@@ -77,7 +77,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
     margin: -10px 0 0 -7px;
 }
 
-#gifplaypause{display:block;float:left;}
+#gifplaypause,#soundplaypause{display:block;float:left;line-height:1.5em;margin:2px;padding:2px;}
 
 </style>
 
@@ -87,11 +87,12 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 
 <body>
 	<div id="searchstrip">
-		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('lion')">Lions</button>.  <button onclick="showinfo();" id="showinfo">i</button> use #in the url to search: or link:<span id="searchlink"></span>
+		Don't like puppies then search: <input type="text" name="search" value="" id="search" > <button onclick="reload();">Search</button> or <button onclick="load('cat')">Cats</button>, <button onclick="load('bear')">Bears</button> or <button onclick="load('experimental')">experimental</button>.  <button onclick="showinfo();" id="showinfo">i</button> use #in the url to search: or link:<span id="searchlink"></span>
 	</div>
 	<div id="puppies">
 		<p>This is a page made in response to the DS106 daily create of 6th April 2016. I've used it to learn a little bit about git, github and hosting pages on github. Very much inspired by @cogdog.</p>
 		<p>Check the top bar for searching and linking to the current search. The link at the bottom right will link to the current gif &amp; combo.</p>
+		<p>The pause/play buttons do not stop the gif or the sound, they stop either moving onto the next rsandom gif or sound.</p>
 		<p>Made by John Johnston @johnjohnston.</p><p>Click this box to hide.</p>
 		
 	</div>
@@ -104,7 +105,7 @@ body{background-size:cover;height:100%;background-repeat:no-repeat; background-p
 	
 	   
 	
-	<div class="footer" ><span id="gifplaypause"></span><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
+	<div class="footer" ><span id="gifplaypause">gif</span><span id="soundplaypause">sound</span><span id="credit"></span><br> <span id="gifcredit"></span> | <span id="soundcredit"></span><a href="#" id="linkurl"><img src="link_40.png" id="link"></a>
 		 
 	</div>
 
@@ -198,6 +199,7 @@ var playNext=function(){
 	currentSoundId=sounds[currentSound].id;
 	updateLink();
 	currentSound++;
+	$('#soundplaypause').html("sound: "+pauseicon);
 }
 
 var startGifs=function(){
@@ -213,6 +215,7 @@ var startGifs=function(){
 			//$('.giphylink')[i].href=gifs.data[i].source ;
 			//gifurl=gifs.data[i].images.original.url;
 			updateLink();
+			$('#gifplaypause').html("gif: "+pauseicon);
 	    };
  
    	 var gifTimer=function(){
@@ -331,6 +334,25 @@ var startGifs=function(){
 			 restartGif();
 		 }else{pauseGif();}
 	 })
+	 
+	 $('#soundplaypause').click(function(){
+	 	
+		 if (audioPlayer.loop==true){ 
+			 restartSound();
+		 }else { pauseSound();}
+	 })
+	 
+	 var pauseSound =function(){
+		 audioPlayer.loop=true;
+		 $('#soundplaypause').html("sound: "+playicon);
+	 }
+	 
+	 var restartSound=function(){
+		 playNext();
+		 audioPlayer.loop=false;
+		 $('#soundplaypause').html("sound: "+pauseicon);
+		
+	 }
  </script>
 	
  </body>
